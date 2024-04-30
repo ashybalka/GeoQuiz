@@ -28,6 +28,7 @@ public class Country
     public int Id;
     public Name Name;
     public Capital Capital;
+    public string Language;
 }
 [Serializable]
 public class Name
@@ -51,3 +52,5 @@ public class Currency
     public string RuName;
     public string TrName;
 }
+
+

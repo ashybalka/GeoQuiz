@@ -5,6 +5,7 @@ using UnityEngine.UI;
 public class CountryController : MonoBehaviour
 {
     public int countryId;
+    public string gameMode;
     private GameManager gameManager;
     [SerializeField] Image RightWrongImage;
     [SerializeField] AudioSource RightAudio, WrongAudio;
@@ -62,6 +63,6 @@ public class CountryController : MonoBehaviour
     IEnumerator WaitingforRight()
     {
         yield return new WaitForSeconds(1f);
-        gameManager.CreateNewQuestion();
+        gameManager.CreateNewQuestion(gameMode);
     }
 }

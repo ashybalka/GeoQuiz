@@ -41,7 +41,7 @@ public class GameManager : MonoBehaviour
             GetLoad();
         }
     }
-    public void CreateNewQuestion()
+    public void CreateNewQuestion(string gameMode)
     {
         CleanGameScreen();
 
@@ -57,11 +57,6 @@ public class GameManager : MonoBehaviour
 
         //Etalon country
         int i = Random.Range(0, countryStats.Country._countriesList.Count);
-
-        countryName.text = TranslateCountryName(i);
-
-        scoreText.text = score.ToString();
-        levelText.text = level.ToString();
 
         countryArray[0] = countryStats.Country._countriesList.Where(c => c.Id == i).First().Id;
         etalonCountryId = countryStats.Country._countriesList.Where(c => c.Id == i).First().Id;
@@ -84,13 +79,36 @@ public class GameManager : MonoBehaviour
         for (int j = 0; j < countryArray.Length; j++)
         { 
             var generatedCountry = Instantiate(CountryPrefab);
-
-            string spriteName = "Images/Flags/" + countryStats.Country._countriesList.Where(c => c.Id == countryArray[j]).First().Name.EnName;
-            generatedCountry.GetComponent<Image>().sprite = Resources.Load<Sprite>(spriteName);
-
             generatedCountry.transform.SetParent(CountriesObjectsParent.transform, false);
             generatedCountry.GetComponent<CountryController>().countryId = countryArray[j];
+            generatedCountry.GetComponent<CountryController>().gameMode = gameMode;
+
+            switch (gameMode)
+            {
+                case "Country":
+                    string spriteName = "Images/Flags/" + countryStats.Country._countriesList.Where(c => c.Id == countryArray[j]).First().Name.EnName;
+                    generatedCountry.GetComponent<Image>().sprite = Resources.Load<Sprite>(spriteName);
+                    break;
+                case "Capital":
+                    generatedCountry.GetComponent<Image>().sprite = null;
+                    generatedCountry.GetComponentInChildren<TMP_Text>().text = TranslateCapitalName(countryArray[j]);
+                    break;
+            }
         }
+
+        scoreText.text = score.ToString();
+        levelText.text = level.ToString();
+
+        switch (gameMode)
+        {
+            case "Country":
+                countryName.text = TranslateCountryName(i);
+                break;
+            case "Capital":
+                countryName.text = TranslateCapitalName(i);
+                break;
+        }
+
     }
 
     public void FakeChangeScene()
@@ -115,6 +133,18 @@ public class GameManager : MonoBehaviour
             _ => countryStats.Country._countriesList.Where(c => c.Id == id).First().Name.RuName,
         };
     }
+
+    public string TranslateCapitalName(int id)
+    {
+        return YandexGame.savesData.language switch
+        {
+            "en" => countryStats.Country._countriesList.Where(c => c.Id == id).First().Capital.EnName,
+            "ru" => countryStats.Country._countriesList.Where(c => c.Id == id).First().Capital.RuName,
+            "tr" => countryStats.Country._countriesList.Where(c => c.Id == id).First().Capital.TrName,
+            _ => countryStats.Country._countriesList.Where(c => c.Id == id).First().Capital.RuName,
+        };
+    }
+
     public static int[] RandomizeWithFisherYates(int[] array)
     {
         int count = array.Length;
