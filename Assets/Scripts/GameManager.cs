@@ -18,24 +18,24 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] TMP_Text WinPoints;
 
-    public string etalonCountryName;
+    public int etalonCountryId;
     public int level;
     public int score;
     private int health = 3;
 
     public int pointsTotal;
 
-
     private CountryStats countryStats;
-
-
 
     private void OnEnable() => YandexGame.GetDataEvent += GetLoad;
     private void OnDisable() => YandexGame.GetDataEvent -= GetLoad;
+
     private void Start()
     {
         countryStats = GameObject.Find("Loader").GetComponent<CountryStats>();
+
         pointsTotalText.text = "0";
+
         if (YandexGame.SDKEnabled == true)
         {
             GetLoad();
@@ -44,33 +44,34 @@ public class GameManager : MonoBehaviour
     public void CreateNewQuestion()
     {
         CleanGameScreen();
-        string[] countryArray;
+
+        int[] countryArray;
         if (level <= 8)
         {
-            countryArray = new string[level + 2];
+            countryArray = new int[level + 2];
         }
         else 
         {
-            countryArray = new string[10];
+            countryArray = new int[10];
         }
 
         //Etalon country
         int i = Random.Range(0, countryStats.Country._countriesList.Count);
+
         countryName.text = TranslateCountryName(i);
+
         scoreText.text = score.ToString();
         levelText.text = level.ToString();
 
-
-        //countryArray[0] = countryStats.Country._countriesList.Where(c => c.Id == i).First().Id.ToString();
-        countryArray[0] = countryStats.Country._countriesList.Where(c => c.Id == i).First().Name.EnName;
-        etalonCountryName = countryStats.Country._countriesList.Where(c => c.Id == i).First().Name.EnName;
+        countryArray[0] = countryStats.Country._countriesList.Where(c => c.Id == i).First().Id;
+        etalonCountryId = countryStats.Country._countriesList.Where(c => c.Id == i).First().Id;
  
         int k = 1;
 
         while ( k < countryArray.Length)
         {
             int z = Random.Range(0, countryStats.Country._countriesList.Count);
-            string tempId = countryStats.Country._countriesList.Where(c => c.Id == z).First().Name.EnName;
+            int tempId = countryStats.Country._countriesList.Where(c => c.Id == z).First().Id;
             if (!countryArray.Contains(tempId))
             {
                 countryArray[k] = tempId;
@@ -83,10 +84,12 @@ public class GameManager : MonoBehaviour
         for (int j = 0; j < countryArray.Length; j++)
         { 
             var generatedCountry = Instantiate(CountryPrefab);
-            string spriteName = "Images/Flags/" + countryArray[j];
+
+            string spriteName = "Images/Flags/" + countryStats.Country._countriesList.Where(c => c.Id == countryArray[j]).First().Name.EnName;
             generatedCountry.GetComponent<Image>().sprite = Resources.Load<Sprite>(spriteName);
+
             generatedCountry.transform.SetParent(CountriesObjectsParent.transform, false);
-            generatedCountry.GetComponent<CountryController>().countryName = countryArray[j];
+            generatedCountry.GetComponent<CountryController>().countryId = countryArray[j];
         }
     }
 
@@ -112,7 +115,7 @@ public class GameManager : MonoBehaviour
             _ => countryStats.Country._countriesList.Where(c => c.Id == id).First().Name.RuName,
         };
     }
-    public static string[] RandomizeWithFisherYates(string[] array)
+    public static int[] RandomizeWithFisherYates(int[] array)
     {
         int count = array.Length;
         while (count > 1)

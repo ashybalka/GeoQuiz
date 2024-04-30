@@ -27,6 +27,7 @@ public class Country
 {
     public int Id;
     public Name Name;
+    public Capital Capital;
 }
 [Serializable]
 public class Name
@@ -34,4 +35,12 @@ public class Name
     public string EnName;
     public string RuName;
     public string TrName;
+}
+
+[Serializable]
+public class Capital
+{
+    public string EnCapital;
+    public string RuCapital;
+    public string TrCapital;
 }

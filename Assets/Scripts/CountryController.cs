@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 public class CountryController : MonoBehaviour
 {
-    public string countryName;
+    public int countryId;
     private GameManager gameManager;
     [SerializeField] Image RightWrongImage;
     [SerializeField] AudioSource RightAudio, WrongAudio;
@@ -20,7 +20,7 @@ public class CountryController : MonoBehaviour
         foreach (CountryController con in contries)
         {
             con.GetComponent<Button>().interactable = false;
-            if (con.countryName == gameManager.etalonCountryName)
+            if (con.countryId == gameManager.etalonCountryId)
             {
                 con.RightWrongImage.gameObject.SetActive(true);
                 con.RightWrongImage.sprite = Resources.Load<Sprite>("Images/OkButton");
@@ -28,7 +28,7 @@ public class CountryController : MonoBehaviour
         }
 
         int currentLevelPoint = 1 + CheckLevel(gameManager.score);
-        if (countryName == gameManager.etalonCountryName)
+        if (countryId == gameManager.etalonCountryId)
         {
             gameManager.Damage(currentLevelPoint, gameObject);
             gameManager.score += currentLevelPoint;
