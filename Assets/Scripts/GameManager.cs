@@ -18,59 +18,6 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] TMP_Text WinPoints;
 
-    private readonly string[] contryNames = { "Afghanistan", "Albania", "Algeria", "Andorra", "Angola", "Antigua and Barbuda", "Argentina", "Armenia", "Australia",
-        "Austria", "Azerbaijan", "Bahrain", "Bangladesh", "Barbados", "Belarus", "Belgium", "Belize", "Benin", "Bhutan", "Bolivia", "Bosnia and Herzegovina", "Botswana",
-        "Brazil", "Brunei", "Bulgaria", "Burkina Faso", "Burundi", "Cambodia", "Cameroon", "Canada", "Cape Verde", "Central African Republic", "Chad", "Chile", "China",
-        "Colombia", "Comoros", "Costa Rica", "Croatia", "Cuba", "Cyprus", "Czech Republic", "Democratic Republic of the Congo", "Denmark", "Djibouti", "Dominica",
-        "Dominican Republic", "East Timor", "Ecuador", "Egypt", "El Salvador", "Equatorial Guinea", "Eritrea", "Estonia", "Eswatini", "Ethiopia",
-        "Federated States of Micronesia", "Finland", "France", "Gabon", "Georgia", "Germany", "Ghana", "Greece", "Grenada", "Guatemala", "Guinea-Bissau", "Guinea",
-        "Guyana", "Haiti", "Honduras", "Hungary", "Iceland", "India", "Indonesia", "Iran", "Iraq", "Ireland", "Israel", "Italy", "Ivory Coast", "Jamaica",
-        "Japan", "Jordan", "Kazakhstan", "Kenya", "Kiribati", "Kuwait", "Kyrgyzstan", "Laos", "Latvia", "Lebanon", "Lesotho", "Liberia", "Libya", "Liechtenstein",
-        "Lithuania", "Luxembourg", "Madagascar", "Malawi", "Malaysia", "Maldives", "Mali", "Malta", "Marshall Islands", "Mauritania", "Mauritius", "Mexico", "Moldova",
-        "Monaco", "Mongolia", "Montenegro", "Morocco", "Mozambique", "Myanmar", "Namibia", "Nauru", "Nepal", "Netherlands", "New Zealand", "Nicaragua", "Niger",
-        "Nigeria", "North Korea", "North Macedonia", "Norway", "Oman", "Pakistan", "Palau", "Panama", "Papua New Guinea", "Paraguay", "Peru", "Philippines", "Poland",
-        "Portugal", "Qatar", "Republic of the Congo", "Romania", "Russia", "Rwanda", "Saint Thomas and Prince", "Saint Kitts and Nevis", "Saint Lucia", 
-        "Saint Vincent and the Grenadines", "Samoa", "San Marino", "Saudi Arabia", "Senegal", "Serbia", "Seychelles", "Sierra Leone", "Singapore", "Slovakia", "Slovenia",
-        "Solomon Islands", "Somalia", "South Africa", "South Korea", "South Sudan", "Spain", "Sri Lanka", "Sudan", "Suriname", "Sweden", "Switzerland", "Syria",
-        "Tajikistan", "Tanzania", "Thailand", "The Gambia", "The Bahamas", "Togo", "Tonga", "Trinidad and Tobago", "Tunisia", "Turkey", "Turkmenistan", "Tuvalu",
-        "Uganda", "Ukraine", "United Arab Emirates", "United Kingdom", "United States", "Uruguay", "Uzbekistan", "Vanuatu", "Vatican", "Venezuela", "Vietnam", 
-        "Yemen", "Zambia", "Zimbabwe"};
-    private readonly string[] contryNamesRu = { "Афганистан", "Албания", "Алжир", "Андорра", "Ангола", "Антигуа и Барбуда", "Аргентина", "Армения", "Австралия",
-        "Австрия", "Азербайджан", "Бахрейн", "Бангладеш", "Барбадос", "Беларусь", "Бельгия", "Белиз", "Бенин", "Бутан", "Боливия", "Босния и Герцеговина", "Ботсвана",
-        "Бразилия", "Бруней", "Болгария", "Буркина-Фасо", "Бурунди", "Камбоджа", "Камерун", "Канада", "Кабо-Верде", "Центральноафриканская Республика", "Чад", "Чили", 
-        "Китай", "Колумбия", "Коморы", "Коста-Рика", "Хорватия", "Куба", "Кипр", "Чехия", "Демократическая Республика Конго", "Дания", "Джибути", "Доминика",
-        "Доминиканская Республика", "Восточный Тимор", "Эквадор", "Египет", "Сальвадор", "Экваториальная Гвинея", "Эритрея", "Эстония", "Эсватини", "Эфиопия",
-        "Федеративные Штаты Микронезии", "Финляндия", "Франция", "Габон", "Грузия", "Германия", "Гана", "Греция", "Гренада", "Гватемала", "Гвинея-Бисау", "Гвинея",
-        "Гайана", "Гаити", "Гондурас", "Венгрия", "Исландия", "Индия", "Индонезия", "Иран", "Ирак", "Ирландия", "Израиль", "Италия", "Кот-д'Ивуар", "Ямайка",
-        "Япония", "Иордания", "Казахстан", "Кения", "Кирибати", "Кувейт", "Кыргызстан", "Лаос", "Латвия", "Ливан", "Лесото", "Либерия", "Ливия", "Лихтенштейн",
-        "Литва", "Люксембург", "Мадагаскар", "Малави", "Малайзия", "Мальдивы", "Мали", "Мальта", "Маршалловы Острова", "Мавритания", "Маврикий", "Мексика", "Молдова",
-        "Монако", "Монголия", "Черногория", "Марокко", "Мозамбик", "Мьянма", "Намибия", "Науру", "Непал", "Нидерланды", "Новая Зеландия", "Никарагуа", "Нигер",
-        "Нигерия", "Северная Корея", "Северная Македония", "Норвегия", "Оман", "Пакистан", "Палау", "Панама", "Папуа - Новая Гвинея", "Парагвай", "Перу", "Филиппины", 
-        "Польша", "Португалия", "Катар", "Республика Конго", "Румыния", "Россия", "Руанда", "Сан-Томе и Принсипи", "Сент-Китс и Невис", "Сент-Люсия",
-        "Сент-Винсент и Гренадины", "Самоа", "Сан-Марино", "Саудовская Аравия", "Сенегал", "Сербия", "Сейшелы", "Сьерра-Леоне", "Сингапур", "Словакия", "Словения",
-        "Соломоновы Острова", "Сомали", "Южная Африка", "Южная Корея", "Южный Судан", "Испания", "Шри-Ланка", "Судан", "Суринам", "Швеция", "Швейцария", "Сирия",
-        "Таджикистан", "Танзания", "Таиланд", "Гамбия", "Багамские Острова", "Того", "Тонга", "Тринидад и Тобаго", "Тунис", "Турция", "Туркменистан", "Тувалу",
-        "Уганда", "Украина", "Объединенные Арабские Эмираты", "Великобритания", "Соединенные Штаты", "Уругвай", "Узбекистан", "Вануату", "Ватикан", "Венесуэла", "Вьетнам",
-        "Йемен", "Замбия", "Зимбабве" };
-    private readonly string[] contryNamesTr = { "Afganistan", "Arnavutluk", "Cezayir", "Andorra", "Angola", "Antigua ve Barbuda", "Arjantin", "Ermenistan", "Avustralya",
-        "Avusturya", "Azerbaycan", "Bahreyn", "Bangladeş", "Barbados", "Belarus", "Belçika", "Belize", "Benin", "Butan", "Bolivya", "Bosna-Hersek", "Botsvana",
-        "Brezilya", "Brunei", "Bulgaristan", "Burkina Faso", "Burundi", "Kamboçya", "Kamerun", "Kanada", "Cape Verde", "Orta Afrika Cumhuriyeti", "Çad", "Şili", "Çin",
-        "Kolombiya", "Komorlar", "Kosta Rika", "Hırvatistan", "Küba", "Kıbrıs", "Çek Cumhuriyeti", "Demokratik Kongo Cumhuriyeti", "Danimarka", "Cibuti", "Dominika",
-        "Dominik Cumhuriyeti", "Doğu Timor", "Ekvador", "Mısır", "El Salvador", "Ekvator Ginesi", "Eritre", "Estonya", "Esvatini", "Etiyopya",
-        "Mikronezya Federal Devletleri", "Finlandiya", "Fransa", "Gabon", "Gürcistan", "Almanya", "Gana", "Yunanistan", "Grenada", "Guatemala", "Gine-Bissau", "Gine",
-        "Guyana", "Haiti", "Honduras", "Macaristan", "İzlanda", "Hindistan", "Endonezya", "İran", "Irak", "İrlanda", "İsrail", "İtalya", "Fildişi Sahili", "Jamaika",
-        "Japonya", "Ürdün", "Kazakistan", "Kenya", "Kiribati", "Kuveyt", "Kırgızistan", "Laos", "Letonya", "Lübnan", "Lesotho", "Liberya", "Libya", "Lihtenştayn",
-        "Litvanya", "Lüksemburg", "Madagaskar", "Malavi", "Malezya", "Maldivler", "Mali", "Malta", "Marshall Adaları", "Moritanya", "Mauritius", "Meksika", "Moldova",
-        "Monako", "Moğolistan", "Karadağ", "Fas", "Mozambik", "Myanmar", "Namibya", "Nauru", "Nepal", "Hollanda", "Yeni Zelanda", "Nikaragua", "Nijer",
-        "Nijerya", "Kuzey Kore", "Kuzey Makedonya", "Norveç", "Umman", "Pakistan", "Palau", "Panama", "Papua Yeni Gine", "Paraguay", "Peru", "Filipinler", "Polonya",
-        "Portekiz", "Katar", "Kongo Cumhuriyeti", "Romanya", "Rusya", "Ruanda", "São Tomé ve Príncipe", "Saint Kitts ve Nevis", "Saint Lucia",
-        "Saint Vincent ve Grenadinler", "Samoa", "San Marino", "Suudi Arabistan", "Senegal", "Sırbistan", "Seyşeller", "Sierra Leone", "Singapur", "Slovakya", "Slovenya",
-        "Solomon Adaları", "Somali", "Güney Afrika", "Güney Kore", "Güney Sudan", "İspanya", "Sri Lanka", "Sudan", "Surinam", "İsveç", "İsviçre", "Suriye",
-        "Tacikistan", "Tanzanya", "Tayland", "Gambiya", "Bahamalar", "Togo", "Tonga", "Trinidad ve Tobago", "Tunus", "Türkiye", "Türkmenistan", "Tuvalu",
-        "Uganda", "Ukrayna", "Birleşik Arap Emirlikleri", "Birleşik Krallık", "Amerika Birleşik Devletleri", "Uruguay", "Özbekistan", "Vanuatu", "Vatikan", "Venezuela", 
-        "Vietnam", "Yemen", "Zambiya", "Zimbabve" };
-
-
     public string etalonCountryName;
     public int level;
     public int score;
@@ -79,11 +26,15 @@ public class GameManager : MonoBehaviour
     public int pointsTotal;
 
 
+    private CountryStats countryStats;
+
+
 
     private void OnEnable() => YandexGame.GetDataEvent += GetLoad;
     private void OnDisable() => YandexGame.GetDataEvent -= GetLoad;
     private void Start()
     {
+        countryStats = GameObject.Find("Loader").GetComponent<CountryStats>();
         pointsTotalText.text = "0";
         if (YandexGame.SDKEnabled == true)
         {
@@ -103,24 +54,26 @@ public class GameManager : MonoBehaviour
             countryArray = new string[10];
         }
 
-        int i = Random.Range(0, contryNames.Length);
-
+        //Etalon country
+        int i = Random.Range(0, countryStats.Country._countriesList.Count);
         countryName.text = TranslateCountryName(i);
         scoreText.text = score.ToString();
         levelText.text = level.ToString();
 
-        countryArray[0] = contryNames[i];
-        etalonCountryName = contryNames[i];
 
-        
+        //countryArray[0] = countryStats.Country._countriesList.Where(c => c.Id == i).First().Id.ToString();
+        countryArray[0] = countryStats.Country._countriesList.Where(c => c.Id == i).First().Name.EnName;
+        etalonCountryName = countryStats.Country._countriesList.Where(c => c.Id == i).First().Name.EnName;
+ 
         int k = 1;
 
         while ( k < countryArray.Length)
         {
-            int z = Random.Range(0, contryNames.Length);
-            if (!countryArray.Contains(contryNames[z]))
+            int z = Random.Range(0, countryStats.Country._countriesList.Count);
+            string tempId = countryStats.Country._countriesList.Where(c => c.Id == z).First().Name.EnName;
+            if (!countryArray.Contains(tempId))
             {
-                countryArray[k] = contryNames[z];
+                countryArray[k] = tempId;
                 k++;
             }
         }
@@ -153,10 +106,10 @@ public class GameManager : MonoBehaviour
     {
         return YandexGame.savesData.language switch
         {
-            "en" => contryNames[id],
-            "ru" => contryNamesRu[id],
-            "tr" => contryNamesTr[id],
-            _ => contryNamesRu[id],
+            "en" => countryStats.Country._countriesList.Where(c => c.Id == id).First().Name.EnName,
+            "ru" => countryStats.Country._countriesList.Where(c => c.Id == id).First().Name.RuName,
+            "tr" => countryStats.Country._countriesList.Where(c => c.Id == id).First().Name.TrName,
+            _ => countryStats.Country._countriesList.Where(c => c.Id == id).First().Name.RuName,
         };
     }
     public static string[] RandomizeWithFisherYates(string[] array)
