@@ -40,7 +40,14 @@ public class Name
 [Serializable]
 public class Capital
 {
-    public string EnCapital;
-    public string RuCapital;
-    public string TrCapital;
+    public string EnName;
+    public string RuName;
+    public string TrName;
+}
+[Serializable]
+public class Currency
+{
+    public string EnName;
+    public string RuName;
+    public string TrName;
 }
