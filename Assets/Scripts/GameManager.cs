@@ -65,7 +65,9 @@ public class GameManager : MonoBehaviour
 
         while ( k < countryArray.Length)
         {
+            Debug.Log("Count " + countryStats.Country._countriesList.Count);
             int z = Random.Range(0, countryStats.Country._countriesList.Count);
+            Debug.Log(z);
             int tempId = countryStats.Country._countriesList.Where(c => c.Id == z).First().Id;
             if (!countryArray.Contains(tempId))
             {
@@ -99,15 +101,17 @@ public class GameManager : MonoBehaviour
         scoreText.text = score.ToString();
         levelText.text = level.ToString();
 
+        countryName.text = TranslateCountryName(i);
+        /*
         switch (gameMode)
         {
             case "Country":
                 countryName.text = TranslateCountryName(i);
                 break;
             case "Capital":
-                countryName.text = TranslateCapitalName(i);
+                countryName.text = TranslateCountryName(i);
                 break;
-        }
+        }*/
 
     }
 
