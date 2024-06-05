@@ -1619,9 +1619,9 @@
                 "TrName": "Kazakistan"
             },
             "Capital": {
-                "EnName": "Nur-Sultan",
-                "RuName": "Нур-Султан",
-                "TrName": "Nur-Sultan"
+                "EnName": "Astana",
+                "RuName": "Астана",
+                "TrName": "Astana"
             },
             "Currency": {
                 "Symbol": "₸",
@@ -2819,7 +2819,7 @@
         {
             "Id": 146,
             "Name": {
-                "EnName": "Sao Tome and Principe",
+                "EnName": "Saint Thomas and Prince",
                 "RuName": "Сан-Томе и Принсипи",
                 "TrName": "São Tomé ve Príncipe"
             },
